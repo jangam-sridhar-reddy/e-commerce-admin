@@ -1,0 +1,22 @@
+<div class="w-[80%] mx-auto px-4">
+  <h1 class="text-2xl text-center">{{ pageTitle }}</h1>
+
+  <div>
+    <form [formGroup]="productForm">
+      <div>
+        <mat-form-field>
+          <mat-label>Product Name</mat-label>
+          <input
+            matInput
+            placeholder="Product Name"
+            formControlName="productName"
+            required
+          />
+          @if (productForm.get('productName')?.invalid) {
+          <mat-error>Please Enter Prodcut Name</mat-error>
+          }
+        </mat-form-field>
+      </div>
+    </form>
+  </div>
+</div>
