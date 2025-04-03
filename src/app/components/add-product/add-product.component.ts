@@ -1,43 +1,51 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import {
   FormBuilder,
-  FormControl,
-  FormGroup,
-  FormsModule,
+  FormGroup, 
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { ActivatedRoute, Router } from '@angular/router';
+import { InputTextFormComponent } from '../form/input-text-form/input-text-form.component';
 
 @Component({
   selector: 'app-add-product',
-  imports: [
-    MatFormFieldModule,
-    MatInputModule,
-    FormsModule,
+  standalone:true,
+  imports: [ 
     ReactiveFormsModule,
+    InputTextFormComponent
   ],
   templateUrl: './add-product.component.html',
   styleUrl: './add-product.component.scss',
 })
-export class AddProductComponent implements OnInit {
+export class AddProductComponent implements OnInit { 
   public productForm: FormGroup = Object.create(null);
   pageTitle: string = 'Add Product';
-  id!: string;
+  
   edit: boolean = false;
-  constructor(private route: ActivatedRoute, private fb: FormBuilder) {}
+
+  constructor( private fb: FormBuilder) {}
+
+  @Input() id:string = '';
 
   ngOnInit(): void {
     this.productForm = this.fb.group({
       productName: this.fb.control(null, Validators.required),
+      productPrice: this.fb.control(null, Validators.required),
     });
 
-    console.log(this.route.snapshot.paramMap.get('id'));
     if (this.id) {
       this.pageTitle = 'Edit Product';
       this.edit = true;
     }
+  }
+
+  submit(){
+    console.log(this.productForm)
+    if(!this.productForm.valid) {
+      this.productForm.markAllAsTouched();
+      return 
+    }
+
+    console.log(this.productForm)
   }
 }

@@ -1,21 +1,30 @@
 <div class="w-[80%] mx-auto px-4">
   <h1 class="text-2xl text-center">{{ pageTitle }}</h1>
 
-  <div>
+  <div class="w-1/2 mt-5 mx-auto">
     <form [formGroup]="productForm">
-      <div>
-        <mat-form-field>
-          <mat-label>Product Name</mat-label>
-          <input
-            matInput
-            placeholder="Product Name"
-            formControlName="productName"
-            required
-          />
-          @if (productForm.get('productName')?.invalid) {
-          <mat-error>Please Enter Prodcut Name</mat-error>
-          }
-        </mat-form-field>
+      <div class="mb-4">
+        <app-input-text-form
+          label="Product Name"
+          type="text"
+          formControlName="productName"
+        />
+      </div>
+      <div class="mb-4">
+        <app-input-text-form
+          label="Product Price"
+          type="text"
+          formControlName="productPrice"
+        />
+      </div>
+      <div class="flex justify-center">
+        <button
+          type="button"
+          class="py-2 px-4 bg-[#4f39f6] text-white text-sm font-[500] rounded cursor-pointer"
+          (click)="submit()"
+        >
+          Submit
+        </button>
       </div>
     </form>
   </div>
