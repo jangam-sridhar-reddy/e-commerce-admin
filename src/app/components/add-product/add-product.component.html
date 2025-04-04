@@ -4,11 +4,39 @@
   <div class="w-1/2 mt-5 mx-auto">
     <form [formGroup]="productForm">
       <div class="mb-4">
+        <app-input-select-form
+          label="Category Name"
+          [options]="selectOptions"
+          formControlName="categoryName"
+        />
+      </div>
+      <div class="mb-4">
+        <app-input-select-form
+          label="Sub Category Name"
+          [options]="selectOptions"
+          formControlName="subCategoryName"
+        />
+      </div>
+      <div class="mb-4">
         <app-input-text-form
           label="Product Name"
           type="text"
           formControlName="productName"
         />
+      </div>
+      <div class="mb-4">
+        <app-input-select-form
+          label="Stock"
+          [options]="selectOptions"
+          formControlName="stock"
+        />
+      </div>
+      <div class="mb-4">
+        <app-input-file-form (change)="onFileChange($event)" />
+        <input type="hidden" formControlName="productFile" />
+        @if(productForm.get('productName')?.errors?.['required']){
+        <mat-error>Required</mat-error>
+        }
       </div>
       <div class="mb-4">
         <app-input-text-form

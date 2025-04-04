@@ -24,6 +24,16 @@ export const routes: Routes = [
       ),
   },
   {
+    path:'categories',
+    component:FullComponent,
+    loadChildren: () => import('./components/categories/category.routes').then(r => r.CategoryRoutes)
+  },
+  {
+    path : 'sub-category',
+    component : FullComponent,
+    loadChildren : () => import('./components/sub-category/sub-category.routes').then(r => r.subCategoryRoutes)
+  },
+  {
     path: '404',
     loadComponent: () =>
       import('./layout/not-found-component/not-found-component.component').then(

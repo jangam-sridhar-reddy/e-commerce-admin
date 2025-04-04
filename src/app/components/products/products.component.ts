@@ -10,12 +10,12 @@ import { RouterLink } from '@angular/router';
   styleUrl: './products.component.scss',
 })
 export class ProductsComponent implements OnInit {
-  displayedColumns: string[] = ['ID', 'Name', 'Price', 'Actions'];
+  displayedColumns: string[] = ['ID', 'Name', 'cName', 'subCategoryName', 'stock', 'image',  'Price', 'Actions'];
   element_data = [
-    { ID: 1, Name: 'Bottle', Price: '10' },
-    { ID: 2, Name: 'spoon', Price: '2' },
-    { ID: 3, Name: 'Hammer', Price: '50' },
-    { ID: 4, Name: 'Screw Driver', Price: '12' },
+    { ID: 1, Name: 'Bottle', cName: 'Beauty', subCategoryName: 'soaps', stock: 'available', image: '',   Price: '10' },
+    { ID: 2, Name: 'spoon', cName: 'Beauty', subCategoryName: 'soaps', stock: 'available', image: '', Price: '2' },
+    { ID: 3, Name: 'Hammer', cName: 'Beauty', subCategoryName: 'soaps', stock: 'available', image: '', Price: '50' },
+    { ID: 4, Name: 'Screw Driver', cName: 'Beauty', subCategoryName: 'soaps', stock: 'available', image: '', Price: '12' },
   ];
   dataSource = new MatTableDataSource(this.element_data);
   ngOnInit(): void {}

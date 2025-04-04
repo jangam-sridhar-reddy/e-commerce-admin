@@ -1,0 +1,25 @@
+<div class="w-[80%] mx-auto px-4">
+  <h1 class="text-2xl text-center">{{ pageTitle }}</h1>
+
+  <div class="w-1/2 mt-5 mx-auto">
+    <form [formGroup]="categoryForm">
+      <div class="mb-4">
+        <app-input-text-form
+          label="Category Name"
+          type="text"
+          formControlName="categoryName"
+        />
+      </div>
+
+      <div class="flex justify-center">
+        <button
+          type="button"
+          class="py-2 px-4 bg-[#4f39f6] text-white text-sm font-[500] rounded cursor-pointer"
+          (click)="submit()"
+        >
+          Submit
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
