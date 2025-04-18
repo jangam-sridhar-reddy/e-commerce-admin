@@ -1,8 +1,0 @@
-:host {
-    display: flex;
-    &::ng-deep {
-        mat-form-field{
-            flex:1
-        }
-    }
-}

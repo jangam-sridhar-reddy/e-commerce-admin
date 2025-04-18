@@ -12,7 +12,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     ReactiveFormsModule
   ],
   templateUrl: './input-text-form.component.html',
-  styleUrl: './input-text-form.component.scss',
+  styleUrl: './input-text-form.component.css',
   providers:[
     {
       provide: NG_VALUE_ACCESSOR,

@@ -6,7 +6,7 @@ import { HeaderComponent } from '../header/header.component';
   selector: 'app-full',
   imports: [RouterOutlet, CommonModule, HeaderComponent],
   templateUrl: './full.component.html',
-  styleUrl: './full.component.scss',
+  styleUrl: './full.component.css',
 })
 export class FullComponent implements OnInit {
   ngOnInit(): void {}

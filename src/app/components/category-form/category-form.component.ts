@@ -6,7 +6,7 @@ import { InputTextFormComponent } from '../form/input-text-form/input-text-form.
   selector: 'app-category-form',
   imports: [ReactiveFormsModule, InputTextFormComponent],
   templateUrl: './category-form.component.html',
-  styleUrl: './category-form.component.scss'
+  styleUrl: './category-form.component.css'
 })
 export class CategoryFormComponent implements OnInit {
   public categoryForm: FormGroup = Object.create(null);

@@ -16,14 +16,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
   standalone:true,
   imports: [ 
     ReactiveFormsModule,
-    InputTextFormComponent,
+    InputTextFormComponent, 
     InputSelectFormComponent,
     InputFileFormComponent,
     MatFormFieldModule,
     MatInputModule,
   ],
   templateUrl: './add-product.component.html',
-  styleUrl: './add-product.component.scss',
+  styleUrl: './add-product.component.css',
 })
 export class AddProductComponent implements OnInit { 
   public productForm: FormGroup = Object.create(null);

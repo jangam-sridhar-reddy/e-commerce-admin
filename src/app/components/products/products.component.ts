@@ -7,7 +7,7 @@ import { RouterLink } from '@angular/router';
   selector: 'app-products',
   imports: [MatFormFieldModule, MatInputModule, MatTableModule, RouterLink],
   templateUrl: './products.component.html',
-  styleUrl: './products.component.scss',
+  styleUrl: './products.component.css',
 })
 export class ProductsComponent implements OnInit {
   displayedColumns: string[] = ['ID', 'Name', 'cName', 'subCategoryName', 'stock', 'image',  'Price', 'Actions'];

@@ -14,7 +14,7 @@ import {MatSelectModule} from '@angular/material/select';
     
   ],
   templateUrl: './input-select-form.component.html',
-  styleUrl: './input-select-form.component.scss',
+  styleUrl: './input-select-form.component.css',
   providers :[
     {
       provide : NG_VALUE_ACCESSOR,

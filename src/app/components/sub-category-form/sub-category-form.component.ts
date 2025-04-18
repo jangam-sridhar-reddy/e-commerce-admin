@@ -7,7 +7,7 @@ import { InputSelectFormComponent } from '../form/input-select-form/input-select
   selector: 'app-sub-category-form',
   imports: [ReactiveFormsModule, InputTextFormComponent, InputSelectFormComponent],
   templateUrl: './sub-category-form.component.html',
-  styleUrl: './sub-category-form.component.scss'
+  styleUrl: './sub-category-form.component.css'
 })
 export class SubCategoryFormComponent {
   public subCategoryForm: FormGroup = Object.create(null);

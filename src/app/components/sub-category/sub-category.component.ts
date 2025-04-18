@@ -8,7 +8,7 @@ import { RouterLink } from '@angular/router';
   selector: 'app-sub-category',
   imports: [MatFormFieldModule, MatInputModule, MatTableModule, RouterLink],
   templateUrl: './sub-category.component.html',
-  styleUrl: './sub-category.component.scss'
+  styleUrl: './sub-category.component.css'
 })
 export class SubCategoryComponent implements OnInit {
   displayedColumns: string[] = ['ID', 'Name', 'cName', 'Actions'];

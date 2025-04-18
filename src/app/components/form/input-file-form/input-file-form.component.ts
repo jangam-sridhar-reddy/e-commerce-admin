@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
   selector: 'app-input-file-form',
   imports: [],
   templateUrl: './input-file-form.component.html',
-  styleUrl: './input-file-form.component.scss'
+  styleUrl: './input-file-form.component.css'
 })
 export class InputFileFormComponent {
 

@@ -8,7 +8,7 @@ import { RouterLink } from '@angular/router';
   selector: 'app-categories',
   imports: [MatFormFieldModule, MatInputModule, MatTableModule, RouterLink],
   templateUrl: './categories.component.html',
-  styleUrl: './categories.component.scss'
+  styleUrl: './categories.component.css'
 })
 export class CategoriesComponent implements OnInit {
   displayedColumns: string[] = ['ID', 'Name', 'Actions'];
