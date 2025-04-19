@@ -6,15 +6,15 @@
       <div class="mb-4">
         <app-input-select-form
           label="Category Name"
-          [options]="selectOptions"
-          formControlName="categoryName"
+          [options]="category$ | async"
+          formControlName="category_id"
         />
       </div>
       <div class="mb-4">
         <app-input-select-form
           label="Sub Category Name"
-          [options]="selectOptions"
-          formControlName="subCategoryName"
+          [options]="subCategory$ | async"
+          formControlName="sub_category_id"
         />
       </div>
       <div class="mb-4">
@@ -27,14 +27,15 @@
       <div class="mb-4">
         <app-input-select-form
           label="Stock"
-          [options]="selectOptions"
-          formControlName="stock"
+          [options]="stockStatus"
+          formControlName="stock_id"
         />
       </div>
       <div class="mb-4">
         <app-input-file-form (change)="onFileChange($event)" />
-        <input type="hidden" formControlName="productFile" />
-        @if(productForm.get('productName')?.errors?.['required']){
+        <input type="hidden" formControlName="image" />
+        @if(productForm.get('image')?.errors?.['required'] &&
+        productForm.get('image').touched){
         <mat-error>Required</mat-error>
         }
       </div>
@@ -42,7 +43,7 @@
         <app-input-text-form
           label="Product Price"
           type="text"
-          formControlName="productPrice"
+          formControlName="product_price"
         />
       </div>
       <div class="flex justify-center">

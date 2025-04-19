@@ -1,6 +1,6 @@
-<app-header></app-header>
+<app-header *ngIf="headerDisabled"></app-header>
 <main>
-  <div class="w-[80%] mx-auto px-4">
+  <div [ngClass]="{ 'w-[80%] mx-auto px-4': headerDisabled }">
     <router-outlet></router-outlet>
   </div>
 </main>

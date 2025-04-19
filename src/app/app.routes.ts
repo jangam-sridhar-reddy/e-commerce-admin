@@ -1,5 +1,7 @@
 import { Routes } from '@angular/router';
 import { FullComponent } from './layout/full/full.component';
+import { authGuard } from './guard/auth.guard';
+import { noAuthGuard } from './guard/no-auth/no-auth.guard';
 
 export const routes: Routes = [
   {
@@ -9,10 +11,11 @@ export const routes: Routes = [
       import('./authentication/authentication.routes').then(
         (r) => r.AuthenticationRoutes
       ),
+    canActivate: [noAuthGuard]
   },
   {
     path: '',
-    redirectTo: 'authentication',
+    redirectTo: 'products',
     pathMatch: 'full',
   },
   {
@@ -22,16 +25,19 @@ export const routes: Routes = [
       import('./components/products/products.routes').then(
         (r) => r.ProductRoutes
       ),
+    canActivate: [authGuard]
   },
   {
     path:'categories',
     component:FullComponent,
-    loadChildren: () => import('./components/categories/category.routes').then(r => r.CategoryRoutes)
+    loadChildren: () => import('./components/categories/category.routes').then(r => r.CategoryRoutes),
+    canActivate: [authGuard]
   },
   {
     path : 'sub-category',
     component : FullComponent,
-    loadChildren : () => import('./components/sub-category/sub-category.routes').then(r => r.subCategoryRoutes)
+    loadChildren : () => import('./components/sub-category/sub-category.routes').then(r => r.subCategoryRoutes),
+    canActivate: [authGuard]
   },
   {
     path: '404',

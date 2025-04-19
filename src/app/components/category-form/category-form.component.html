@@ -7,7 +7,14 @@
         <app-input-text-form
           label="Category Name"
           type="text"
-          formControlName="categoryName"
+          formControlName="cName"
+        />
+      </div>
+      <div class="mb-4">
+        <app-input-select-form
+          label="Category Status"
+          [options]="categoryStatus"
+          formControlName="is_active"
         />
       </div>
 

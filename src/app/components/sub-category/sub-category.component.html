@@ -23,15 +23,17 @@
   </ng-container>
 
   <!-- Name Column -->
-  <ng-container matColumnDef="Name">
+  <ng-container matColumnDef="subCname">
     <th mat-header-cell *matHeaderCellDef>Sub Category Name</th>
-    <td mat-cell *matCellDef="let element">{{ element.Name }}</td>
+    <td mat-cell *matCellDef="let element">{{ element.subCname }}</td>
   </ng-container>
 
   <!-- Name Column -->
-  <ng-container matColumnDef="cName">
-    <th mat-header-cell *matHeaderCellDef>Category Name</th>
-    <td mat-cell *matCellDef="let element">{{ element.cName }}</td>
+  <ng-container matColumnDef="is_active">
+    <th mat-header-cell *matHeaderCellDef>Sub category status</th>
+    <td mat-cell *matCellDef="let element">
+      {{ element.is_active ? "Active" : "Inactive" }}
+    </td>
   </ng-container>
 
   <!-- Symbol Column -->
@@ -44,7 +46,13 @@
           class="text-[#4f39f6] text-sm hover:text-[#312c85]"
           >Edit</a
         >
-        <button type="button">Delete</button>
+        <button
+          type="button"
+          class="cursor-pointer"
+          (click)="deleteSubCategory(element.ID)"
+        >
+          Delete
+        </button>
       </div>
     </td>
   </ng-container>

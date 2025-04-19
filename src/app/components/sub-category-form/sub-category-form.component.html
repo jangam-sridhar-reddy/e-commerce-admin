@@ -4,20 +4,19 @@
   <div class="w-1/2 mt-5 mx-auto">
     <form [formGroup]="subCategoryForm">
       <div class="mb-4">
-        <app-input-select-form
-          label="Category Name"
-          [options]="selectOptions"
-          formControlName="categoryName"
-        />
-      </div>
-      <div class="mb-4">
         <app-input-text-form
           label="Sub Category Name"
           type="text"
-          formControlName="subCategoryName"
+          formControlName="subCname"
         />
       </div>
-
+      <div class="mb-4">
+        <app-input-select-form
+          label="Sub Category Status"
+          [options]="subCategoryStatus"
+          formControlName="is_active"
+        />
+      </div>
       <div class="flex justify-center">
         <button
           type="button"

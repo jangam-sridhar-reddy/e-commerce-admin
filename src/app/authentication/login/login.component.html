@@ -1,1 +1,36 @@
-<p>login works!</p>
+<body class="antialiased bg-gray-200 text-gray-900 font-sans">
+  <div class="flex items-center h-screen w-full">
+    <div
+      class="w-full bg-white rounded shadow-lg p-8 m-4 md:max-w-sm md:mx-auto"
+    >
+      <span class="block w-full text-xl uppercase font-bold mb-4">Login</span>
+      <form class="mb-4" [formGroup]="loginForm">
+        <div class="mb-4 md:w-full">
+          <app-input-text-form
+            label="Email"
+            type="email"
+            formControlName="email"
+          />
+        </div>
+        <div class="mb-6 md:w-full">
+          <app-input-text-form
+            label="Password"
+            type="password"
+            formControlName="hashPassword"
+          />
+        </div>
+        <button
+          class="bg-green-500 cursor-pointer hover:bg-green-700 text-white uppercase text-sm font-semibold px-4 py-2 rounded"
+          (click)="submit()"
+        >
+          Login
+        </button>
+      </form>
+      <a
+        class="text-blue-700 text-center text-sm"
+        routerLink="/authentication/registration"
+        >Sign up?</a
+      >
+    </div>
+  </div>
+</body>

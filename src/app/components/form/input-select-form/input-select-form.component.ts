@@ -25,7 +25,7 @@ import {MatSelectModule} from '@angular/material/select';
 })
 export class InputSelectFormComponent extends BaseControlValueAccessor<string> implements AfterContentInit{
   @Input() label = '';
-  @Input() options!: {value:string, viewValue:string, id:string}[];
+  @Input() options!: any[];
   control!:FormControl
   constructor(private injector : Injector, private cdf : ChangeDetectorRef){
     super()

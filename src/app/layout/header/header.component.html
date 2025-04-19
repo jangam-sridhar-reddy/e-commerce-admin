@@ -1,6 +1,6 @@
-<header class="bg-white">
+<header class="bg-pastel-blue">
   <nav
-    class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
+    class="mx-auto flex max-w-7xl items-center justify-between p-4 lg:px-8"
     aria-label="Global"
   >
     <div class="flex lg:flex-1">
@@ -46,11 +46,22 @@
       >
     </div>
     <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+      @if (!validToken) {
       <a
         routerLink="/authentication/login"
         class="text-sm/6 font-semibold text-gray-900"
         >Log in <span aria-hidden="true">&rarr;</span></a
       >
+
+      } @else{
+      <button
+        type="button"
+        class="py-2 px-4 bg-[#4f39f6] text-white text-sm font-[500] rounded cursor-pointer"
+        (click)="logout()"
+      >
+        Log out
+      </button>
+      }
     </div>
   </nav>
   <!-- Mobile menu, show/hide based on menu open state. -->
@@ -104,11 +115,22 @@
             >
           </div>
           <div class="py-6">
+            @if (!validToken) {
             <a
               routerLink="/authentication/login"
               class="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
               >Log in</a
             >
+
+            } @else{
+            <button
+              type="button"
+              class="py-2 px-4 bg-[#4f39f6] text-white text-sm font-[500] rounded cursor-pointer"
+              (click)="logout()"
+            >
+              Log out
+            </button>
+            }
           </div>
         </div>
       </div>
