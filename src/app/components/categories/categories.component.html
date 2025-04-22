@@ -34,14 +34,14 @@
     <td mat-cell *matCellDef="let element">
       <div class="flex gap-4 items-center">
         <a
-          routerLink="/categories/edit-category/{{ element?.ID }}"
+          routerLink="/categories/edit-category/{{ element?.category_id }}"
           class="text-[#4f39f6] text-sm hover:text-[#312c85]"
           >Edit</a
         >
         <button
           type="button"
           class="cursor-pointer"
-          (click)="deleteCategory(element?.ID)"
+          (click)="deleteCat(element?.category_id)"
         >
           Delete
         </button>

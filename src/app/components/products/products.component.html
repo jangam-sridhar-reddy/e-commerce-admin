@@ -72,14 +72,14 @@
     <td mat-cell *matCellDef="let element">
       <div class="flex gap-4 items-center">
         <a
-          routerLink="/products/edit-product/{{ element?.ID }}"
+          routerLink="/products/edit-product/{{ element?.product_id }}"
           class="text-[#4f39f6] text-sm hover:text-[#312c85]"
           >Edit</a
         >
         <button
           type="button"
           class="cursor-pointer"
-          (click)="deleteProduct(element?.ID)"
+          (click)="deleteProd(element?.product_id)"
         >
           Delete
         </button>

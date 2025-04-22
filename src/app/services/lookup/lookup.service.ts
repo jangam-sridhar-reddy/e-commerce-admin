@@ -38,18 +38,21 @@ export class LookupService extends BaseApiService {
     return this.http.post('categories/main', req)
   }
 
-  updateCategory(categoryId:number, req):Observable<any>{
-    return this.http.put(`categories/main/${categoryId}`, req)
+  updateCategory(category_id:string, req):Observable<any>{
+    return this.http.put(`categories/main/${category_id}`, req)
   }
 
-  getCategory(categoryId:number):Observable<any>{
-    return this.http.get(`categories/main/${categoryId}`)
+  getCategory(category_id:string):Observable<any>{
+    return this.http.get(`categories/main/${category_id}`)
   }
 
-  deleteCategory(categoryId:number):Observable<any>{
-    return this.http.delete(`categories/main/${categoryId}`)
+  deleteCategory(category_id:string):Observable<any>{
+    return this.http.delete(`categories/main/${category_id}`)
   } 
 
+
+
+// SUB CATEGORIES API CALLS 
   getSubCategories():Observable<any>{
     return this.http.get('categories/sub').pipe(
       map((subCategories:any[]) => {
@@ -72,16 +75,16 @@ export class LookupService extends BaseApiService {
     return this.http.post('categories/sub', req)
   }
 
-  updateSubCategory(ID:number, req):Observable<any>{
-    return this.http.put(`categories/sub/${ID}`, req)
+  updateSubCategory(sub_category_id:string, req):Observable<any>{
+    return this.http.put(`categories/sub/${sub_category_id}`, req)
   }
 
-  getSubCategory(ID:number):Observable<any>{
-    return this.http.get(`categories/sub/${ID}`)
+  getSubCategory(sub_category_id:string):Observable<any>{
+    return this.http.get(`categories/sub/${sub_category_id}`)
   }
 
-  deleteSubCategory(ID:number):Observable<any>{
-    return this.http.delete(`categories/sub/${ID}`)
+  deleteSubCategory(sub_category_id:string):Observable<any>{
+    return this.http.delete(`categories/sub/${sub_category_id}`)
   } 
  
 

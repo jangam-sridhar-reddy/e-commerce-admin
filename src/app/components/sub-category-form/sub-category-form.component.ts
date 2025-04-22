@@ -1,9 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InputTextFormComponent } from '../form/input-text-form/input-text-form.component';
 import { InputSelectFormComponent } from '../form/input-select-form/input-select-form.component';
-import { LookupService } from '../../services/lookup/lookup.service';
 import { tap } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { selectSubCategory } from '../../store/sub-category/subCategory.selectors';
+import { addSubCategory, loadSubCategory, updateSubCategory } from '../../store/sub-category/subCategory.actions';
 
 @Component({
   selector: 'app-sub-category-form',
@@ -13,6 +15,7 @@ import { tap } from 'rxjs';
 })
 export class SubCategoryFormComponent {
   public subCategoryForm: FormGroup = Object.create(null);
+  store:Store = inject(Store);
   subCategoryStatus  = [
     {
       ID: 1,
@@ -32,9 +35,12 @@ export class SubCategoryFormComponent {
   
   edit: boolean = false;
 
-  constructor( private fb: FormBuilder, private lookupServices: LookupService) {}
+  @Input() sub_category_id:string = '';
 
-  @Input() id:string = '';
+  getSubCategory$ = this.store.select(selectSubCategory)
+
+  constructor( private fb: FormBuilder) {}
+
 
   ngOnInit(): void {
     this.subCategoryForm = this.fb.group({
@@ -43,12 +49,13 @@ export class SubCategoryFormComponent {
 
     });
 
-    if (this.id) {
+    if (this.sub_category_id) {
       this.pageTitle = 'Edit Sub Category';
       this.edit = true;
-      this.lookupServices.getSubCategory(Number(this.id))
+      this.store.dispatch(loadSubCategory({sub_category_id: this.sub_category_id}))
+      this.getSubCategory$
             .pipe(
-        tap((res) => {
+        tap((res:any) => {
           if(res){
             console.log(res)
             this.subCategoryForm.patchValue({
@@ -79,39 +86,13 @@ export class SubCategoryFormComponent {
       subCname :  this.subCategoryForm.get('subCname').value,
       is_active: statusObj?.value === 'true' ? true : false
     }
-    if(this.id){
-      const ID = Number(this.id)
-      this.lookupServices.updateSubCategory(Number(ID),  body)
-      .pipe(
-        tap((res) => {
-          if(res){
-            console.log(res)
-          }
-        })
-      )
-      .subscribe({
-        next: () => {},
-        error: (e) => {
-          console.log(e)
-        }
-      })
+    if(this.sub_category_id){ 
+      this.store.dispatch(updateSubCategory({sub_category_id: this.sub_category_id,  subCategoryBody: body}))
       return
     }
 
-    this.lookupServices.addSubCategory(body)
-      .pipe(
-        tap((res) => {
-          if(res){
-            console.log(res)
-          }
-        })
-      )
-      .subscribe({
-        next: () => {},
-        error: (e) => {
-          console.log(e)
-        }
-      })
+    this.store.dispatch(addSubCategory({   subCategoryBody: body}))
+      
 
     console.log(this.subCategoryForm)
   }

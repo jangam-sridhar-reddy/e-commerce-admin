@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { RouterLink } from '@angular/router';
-import { ProductsService } from '../../services/products/products.service';
-import { tap } from 'rxjs';
+import { RouterLink } from '@angular/router'; 
+import { Store } from '@ngrx/store';
+import { deleteProduct, loadProducts } from '../../store/products/products.actions';
+import { selectAllProducts } from '../../store/products/product.selectors';
 @Component({
   selector: 'app-products',
   imports: [MatFormFieldModule, MatInputModule, MatTableModule, RouterLink],
@@ -12,7 +13,7 @@ import { tap } from 'rxjs';
   styleUrl: './products.component.css',
 })
 export class ProductsComponent implements OnInit {
-  constructor(private productService: ProductsService){}
+   
   displayedColumns: string[] = [
     'ID', 
     'productName', 
@@ -23,10 +24,15 @@ export class ProductsComponent implements OnInit {
     'product_price', 
     'Actions'
   ];
-   
+
+  store:Store = inject(Store);
+  selectAllProdcuts$ = this.store.select(selectAllProducts)
   dataSource = new MatTableDataSource( );
+
   ngOnInit(): void {
-    this.productService.getProducts().subscribe({
+    this.store.dispatch(loadProducts())
+    this.selectAllProdcuts$
+    .subscribe({
       next:(productData)=> {
         this.dataSource.data = productData
       },
@@ -38,20 +44,7 @@ export class ProductsComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  deleteProduct(ID:number){
-    this.productService.deleteProduct(ID)
-    .pipe(
-      tap((res)=> {
-        if(res){
-          console.log(res)
-        }
-      })
-    )
-    .subscribe({
-      next: () => {},
-      error: (e) => {
-        console.log(e)
-      }
-    })
+  deleteProd(product_id:string){
+    this.store.dispatch(deleteProduct({product_id}))
   }
 }

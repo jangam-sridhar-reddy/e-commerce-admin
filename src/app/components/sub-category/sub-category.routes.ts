@@ -13,7 +13,7 @@ export const subCategoryRoutes: Routes = [
         component : SubCategoryFormComponent
     },
     {
-        path : 'edit-sub-category/:id',
+        path : 'edit-sub-category/:sub_category_id',
         component : SubCategoryFormComponent
     }
 ]

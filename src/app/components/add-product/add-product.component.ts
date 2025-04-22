@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup, 
@@ -10,10 +10,15 @@ import { InputSelectFormComponent } from '../form/input-select-form/input-select
 import { InputFileFormComponent } from '../form/input-file-form/input-file-form.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { LookupService } from '../../services/lookup/lookup.service';
-import { Observable, tap } from 'rxjs';
+import { combineLatest, map, Observable, tap } from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { ProductsService } from '../../services/products/products.service';
+import { Store } from '@ngrx/store';
+import { selectAllCategories } from '../../store/category/category.selectors';
+import { selectAllSubCategories } from '../../store/sub-category/subCategory.selectors';
+import { selectAllProducts, selectProduct } from '../../store/products/product.selectors';
+import { loadCategories } from '../../store/category/category.actions';
+import { loadSubCategories } from '../../store/sub-category/subCategory.actions';
+import { addProduct, loadProduct, updateProduct } from '../../store/products/products.actions';
 
 @Component({
   selector: 'app-add-product',
@@ -33,9 +38,8 @@ import { ProductsService } from '../../services/products/products.service';
 export class AddProductComponent implements OnInit { 
   public productForm: FormGroup = Object.create(null);
   pageTitle: string = 'Add Product';
-  category$: Observable<any[]>
-  subCategory$: Observable<any[]>
- 
+
+  store:Store = inject(Store)
 
   stockStatus = [
     {
@@ -52,18 +56,27 @@ export class AddProductComponent implements OnInit {
 
   edit: boolean = false;
 
-  constructor( private fb: FormBuilder, private lookup:LookupService, private productService: ProductsService) {}
+  imageFile:File | null = null;
 
-  @Input() id:string = '';
+  @Input() product_id:string = '';
+
+  category$ = this.store.select(selectAllCategories)
+  subCategory$ = this.store.select(selectAllSubCategories)
+  product$ = this.store.select(selectProduct)
+
+  constructor( private fb: FormBuilder) {}
 
   onFileChange($event) {
     let file = $event.target.files[0]; // <--- File Object for future use.
-    this.productForm.controls['image'].setValue(file); // <-- Set Value for Validation
+    if(file){
+      this.imageFile = file;
+      this.productForm.patchValue({image: file}); // <-- Set Value for Validation
+      this.productForm.get('image')?.updateValueAndValidity();
+    }
+    console.log(this.productForm.controls['image'].value)
   }
   ngOnInit(): void {
-    this.category$ = this.lookup.getCategories().pipe(tap(res => console.log(res)))
-    this.subCategory$ = this.lookup.getSubCategories().pipe(tap(res => console.log(res)))
-
+    
     this.productForm = this.fb.group({
       category_id: this.fb.control(null, Validators.required),
       sub_category_id: this.fb.control(null, Validators.required),
@@ -72,57 +85,71 @@ export class AddProductComponent implements OnInit {
       image: this.fb.control(null, Validators.required),
       product_price: this.fb.control(null, Validators.required),
     }); 
-    if (this.id) {
+
+    this.store.dispatch(loadCategories())
+    this.store.dispatch(loadSubCategories())
+
+    if (this.product_id) {
       this.pageTitle = 'Edit Product';
       this.edit = true;
+      this.store.dispatch(loadProduct({product_id: this.product_id}))
+
+      combineLatest([this.category$, this.subCategory$, this.product$])
+      .pipe(
+         
+        tap(([category, subCategory, product]) => {
+
+         const categoryItem = category?.filter((item) => {
+            return item?.ID === product?.category_id
+          })
+          const subCategoryItem = subCategory?.filter((item) => {
+            return item?.ID === product?.sub_category_id
+          })
+
+          const stockItem = this.stockStatus?.filter((item) => {
+            return item?.ID === product?.stock_id
+          })
+          this.productForm.patchValue({
+            category_id: categoryItem[0],
+            stock_id: stockItem[0],
+            sub_category_id: subCategoryItem[0],
+            product_price: product?.product_price,
+            productName: product?.productName,
+            image: product?.productName
+          })
+          console.log(this.productForm.value) 
+        })
+      )
+      .subscribe()
     }
   }
 
   get productFile() {
     return this.productForm.get('image');
   }
-  submit(){
-    console.log(this.productForm.value)
+  submit(){ 
     if(!this.productForm.valid) {
       this.productForm.markAllAsTouched();
       return 
     }
 
-    if (this.id) {
-      this.productService.updateProduct(Number(this.id), this.productForm.value)
-      .pipe(
-        tap((req) => {
-          if(req){
-            console.log('Product Updated')
-          }
-        })
-      )
-      .subscribe({
-        next: () => {},
-        error: (e)=> {
-          console.log(e)
-        }
-      })
+    const formData = new FormData();
+    formData.append("category_id", this.productForm.get('category_id').value?.ID)
+    formData.append("sub_category_id", this.productForm.get('sub_category_id').value?.ID)
+    formData.append("productName", this.productForm.get('productName').value)
+    formData.append("stock_id", this.productForm.get('stock_id').value?.ID)
+    if(this.imageFile){
+      formData.append("image", this.imageFile)
+    }
+    formData.append("product_price", this.productForm.get('product_price').value)
+     
 
+    if (this.product_id) {
+      this.store.dispatch(updateProduct({product_id: this.product_id, productBody: formData}))
       return
     }
 
-    this.productService.addProduct(this.productForm.value)
-    .pipe(
-      tap((req) => {
-        if(req){
-          console.log('Product added')
-        }
-      })
-    )
-    .subscribe({
-      next: () => {},
-      error: (e)=> {
-        console.log(e)
-      }
-    })
-
-    
+    this.store.dispatch(addProduct({productBody: formData}))
 
     
   }

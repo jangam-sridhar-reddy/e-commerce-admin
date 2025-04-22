@@ -12,7 +12,7 @@ export const CategoryRoutes:Routes = [
         component: CategoryFormComponent
     },
     {
-        path: 'edit-category/:id',
+        path: 'edit-category/:category_id',
         component:CategoryFormComponent
     }
 ]

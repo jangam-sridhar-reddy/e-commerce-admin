@@ -11,19 +11,19 @@ export class ProductsService extends BaseApiService {
     return this.http.get('product/get-products')
   } 
 
-  getProductsById(ID:number):Observable<any>{
-    return this.http.get(`product/get-product/${ID}`)
+  getProductsById(product_id:string):Observable<any>{
+    return this.http.get(`product/get-product/${product_id}`)
   }
 
   addProduct(req):Observable<any>{
     return this.http.post('product/add', req)
   }
 
-  updateProduct(ID:number, req):Observable<any>{
-    return this.http.put(`product/update/${ID}`, req)
+  updateProduct(product_id:string, req):Observable<any>{
+    return this.http.put(`product/update/${product_id}`, req)
   }
 
-  deleteProduct(ID:number):Observable<any>{
-    return this.http.delete(`product/delete/${ID}`)
+  deleteProduct(product_id:string):Observable<any>{
+    return this.http.delete(`product/delete/${product_id}`)
   }
 }
